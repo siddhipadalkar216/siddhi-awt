@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Async Programming</title>
+</head>
+<body>
+<h2>Asynchronous Programming in Node.js</h2>
+
+<button onclick="callAPI('/read-callback')">Read with Callback</button>
+<button onclick="callAPI('/read-promise')">Read with Promise</button>
+<button onclick="callAPI('/read-async')">Read with Async/Await</button>
+
+<p id="output"></p>
+
+<script>
+function callAPI(endpoint) {
+  fetch(endpoint)
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById('output').innerText = data;
+    })
+    .catch(err => {
+      document.getElementById('output').innerText = "Error calling API";
+    });
+}
+</script>
+
+</body>
+</html>

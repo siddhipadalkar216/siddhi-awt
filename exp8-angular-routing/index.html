@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Router with Guards</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+</head>
+<body ng-controller="NavController">
+
+  <nav>
+    <a href="#!/home">Home</a>
+    <a href="#!/about">About</a>
+    <a href="#!/dashboard">Dashboard</a>
+    <span style="float:right">
+      <button ng-if="!isAuthenticated" ng-click="login()">Login</button>
+      <button ng-if="isAuthenticated" ng-click="logout()">Logout</button>
+    </span>
+  </nav>
+  <hr>
+
+  <div ng-view></div>
+
+  <script>
+    var app = angular.module('myApp', ['ngRoute']);
+
+    app.config(function($routeProvider) {
+      $routeProvider
+        .when('/home', {
+          template: '<h2>Home Page</h2><p>Welcome to the Home page.</p>'
+        })
+        .when('/about', {
+          template: '<h2>About Page</h2><p>This is a public About page.</p>'
+        })
+        .when('/dashboard', {
+          template: '<h2>Dashboard</h2><p>Private content. Login required.</p>',
+          resolve: {
+            auth: function(AuthService, $location) {
+              if (!AuthService.isLoggedIn()) {
+                alert("You must login first!");
+                $location.path('/home');
+              }
+            }
+          }
+        })
+        .otherwise({ redirectTo: '/home' });
+    });
+
+    app.factory('AuthService', function() {
+      var loggedIn = false;
+      return {
+        login: function() { loggedIn = true; },
+        logout: function() { loggedIn = false; },
+        isLoggedIn: function() { return loggedIn; }
+      };
+    });
+
+    app.controller('NavController', function($scope, AuthService) {
+      $scope.isAuthenticated = AuthService.isLoggedIn();
+
+      $scope.login = function() {
+        AuthService.login();
+        $scope.isAuthenticated = true;
+      };
+
+      $scope.logout = function() {
+        AuthService.logout();
+        $scope.isAuthenticated = false;
+      };
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>AngularJS Directives Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <h1>AngularJS Directives Demo</h1>
+
+  <!-- ng-model: Two-way binding with input -->
+  <label>Enter your name: </label>
+  <input type="text" ng-model="name" placeholder="Your name here" />
+  <p>Hello, <span ng-bind="name"></span>!</p>
+
+  <hr>
+
+  <!-- ng-show/ng-hide: Show or hide based on condition -->
+  <button ng-click="showList = !showList">
+    {{ showList ? 'Hide' : 'Show' }} Fruits List
+  </button>
+
+  <ul ng-show="showList">
+    <!-- ng-repeat: Loop over array items -->
+    <li ng-repeat="fruit in fruits track by $index">
+      {{ fruit }}
+      <!-- ng-click: Remove item on click -->
+      <button ng-click="removeFruit($index)">Remove</button>
+    </li>
+  </ul>
+
+  <hr>
+
+  <!-- Add new fruit -->
+  <input type="text" ng-model="newFruit" placeholder="Add a fruit" />
+  <button ng-click="addFruit()">Add Fruit</button>
+
+</body>
+
+<script>
+  angular.module("myApp", [])
+    .controller("MainCtrl", function($scope) {
+      $scope.name = "";
+
+      $scope.showList = true;
+
+      $scope.fruits = ["Apple", "Banana", "Orange"];
+
+      $scope.addFruit = function() {
+        if ($scope.newFruit) {
+          $scope.fruits.push($scope.newFruit);
+          $scope.newFruit = "";
+        }
+      };
+
+      $scope.removeFruit = function(index) {
+        $scope.fruits.splice(index, 1);
+      };
+    });
+</script>
+
+</html>

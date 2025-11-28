@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+</head>
+<body>
+  <h2>Login Form</h2>
+  <form onsubmit="return validateLogin()">
+    <label>Username:</label>
+    <input type="text" id="username"><br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password"><br><br>
+
+    <label>Email:</label>
+    <input type="text" id="email"><br><br>
+
+    <input type="submit" value="Login">
+  </form>
+
+  <script>
+    function validateLogin() {
+      var user = document.getElementById("username").value;
+      var pass = document.getElementById("password").value;
+      var email=document.getElementById("email").value;
+
+      if (user === "" || pass === "") {
+        alert("Please fill in both fields.");
+        return false;
+      }
+      if (email === "") {
+        alert("Please fill the fields.");
+        return false;
+      }
+
+      // Example credentials for validation
+      if (user === "admin" && pass === "1234" && email=="admin@gmail.com") {
+        alert("Login successful!");
+        return true;
+      } else {
+        alert("Invalid username or password and email.");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>

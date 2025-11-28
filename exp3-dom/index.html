@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DOM Manipulation</title>
+<style>
+  body { text-align:center; font-family:Arial; }
+  #box { border:1px solid black; padding:10px; margin:20px; }
+  button { margin:5px; padding:8px; }
+</style>
+</head>
+<body>
+<h2>DOM Manipulation Example</h2>
+<div id="box"><p>Initial paragraph</p></div>
+
+<button onclick="createEl()">Create</button>
+<button onclick="appendEl()">Append</button>
+<button onclick="insertEl()">Insert</button>
+<button onclick="removeEl()">Remove</button>
+
+<script>
+let newEl;
+function createEl() {
+  newEl = document.createElement("p");
+  newEl.textContent = "New paragraph added!";
+}
+function appendEl() {
+  if(newEl) document.getElementById("box").appendChild(newEl);
+}
+function insertEl() {
+  let p = document.createElement("p");
+  p.textContent = "Inserted at top!";
+  document.getElementById("box").insertAdjacentElement("afterbegin", p);
+}
+function removeEl() {
+  let box = document.getElementById("box");
+  if(box.lastChild) box.removeChild(box.lastChild);
+}
+</script>
+</body>
+</html>

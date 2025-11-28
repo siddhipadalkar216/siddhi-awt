@@ -1,0 +1,641 @@
+EXP:1
+<!DOCTYPE html>
+<html>
+<head>
+   
+    <title>Calculator</title>
+</head>
+
+<body style="text-align: center ">
+
+    <h2>CALCULATOR</h2>
+
+    <label>Num 1 - <input id="t1"></label>
+    <br><br>
+    
+    <label>Num 2 - <input id="t2"></label>
+    <br><br>
+    
+    
+        <button onclick="add()">Add</button>
+        <button onclick="sub()">Sub</button>
+        <button onclick="mul()">Mul</button>
+        <button onclick="div()">Div</button>
+    
+    <br><br>
+    <textarea name="Result" id="tr"></textarea>
+    <br><br>
+</body>
+
+<script>
+    var n1,n2,result;
+        
+    function cal()
+    {
+       n1=parseInt(document.getElementById("t1").value);
+       n2=parseInt(document.getElementById("t2").value);   
+    }
+    function add()
+    {
+        cal();
+        result=n1+n2
+        document.getElementById("tr").innerText=" "+result 
+    }
+    function sub()
+    {
+        cal();
+        result=n1-n2
+        document.getElementById("tr").innerText=" "+result 
+
+    }
+    function mul()
+    {
+        cal();
+        result=n1*n2
+        document.getElementById("tr").innerText=" "+result 
+
+    }
+   function div()
+   {
+    cal();
+    result=n1/n2
+    document.getElementById("tr").innerText=" "+result 
+
+   }
+</script>
+
+</html>
+---------------------------------------------------------------------------------------------------------------------
+
+EXP:2
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Form</title>
+</head>
+<body>
+  <h2>Login Form</h2>
+  <form onsubmit="return validateLogin()">
+    <label>Username:</label>
+    <input type="text" id="username"><br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password"><br><br>
+
+    <label>Email:</label>
+    <input type="text" id="email"><br><br>
+
+    <input type="submit" value="Login">
+  </form>
+
+  <script>
+    function validateLogin() {
+      var user = document.getElementById("username").value;
+      var pass = document.getElementById("password").value;
+      var email=document.getElementById("email").value;
+
+      if (user === "" || pass === "") {
+        alert("Please fill in both fields.");
+        return false;
+      }
+      if (email === "") {
+        alert("Please fill the fields.");
+        return false;
+      }
+
+      // Example credentials for validation
+      if (user === "admin" && pass === "1234" && email=="admin@gmail.com") {
+        alert("Login successful!");
+        return true;
+      } else {
+        alert("Invalid username or password and email.");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------------------
+EXP:3
+<!DOCTYPE html>
+<html>
+<head>
+<title>DOM Manipulation</title>
+<style>
+  body { text-align:center; font-family:Arial; }
+  #box { border:1px solid black; padding:10px; margin:20px; }
+  button { margin:5px; padding:8px; }
+</style>
+</head>
+<body>
+<h2>DOM Manipulation Example</h2>
+<div id="box"><p>Initial paragraph</p></div>
+
+<button onclick="createEl()">Create</button>
+<button onclick="appendEl()">Append</button>
+<button onclick="insertEl()">Insert</button>
+<button onclick="removeEl()">Remove</button>
+
+<script>
+let newEl;
+function createEl() {
+  newEl = document.createElement("p");
+  newEl.textContent = "New paragraph added!";
+}
+function appendEl() {
+  if(newEl) document.getElementById("box").appendChild(newEl);
+}
+function insertEl() {
+  let p = document.createElement("p");
+  p.textContent = "Inserted at top!";
+  document.getElementById("box").insertAdjacentElement("afterbegin", p);
+}
+function removeEl() {
+  let box = document.getElementById("box");
+  if(box.lastChild) box.removeChild(box.lastChild);
+}
+</script>
+</body>
+</html>
+---------------------------------------------------------------------------------------------------------------------
+EXP:4
+
+fsDemo.js
+const fs = require('fs');
+
+// Write to a file
+fs.writeFileSync('example.txt', 'Hello, Node.js Modules!');
+
+// Read from the file
+const data = fs.readFileSync('example.txt', 'utf8');
+console.log("File Content:", data);
+------------
+server.js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end("Hello, World! This is a Node.js server.");
+});
+
+server.listen(3000, () => {
+    console.log("Server running at http://localhost:3000/");
+});
+------------------------
+Apple.js
+function apple() {
+    console.log("I am Apple");
+}
+module.exports = { apple };
+------------------
+Mango.js
+function mango() {
+    console.log("I am Mango");
+}
+module.exports = { mango };
+------------------
+Fruit.js
+const fruit = require('./Apple');
+fruit.apple();
+
+const fruit1 = require('./Mango');
+fruit1.mango();
+------------------
+figletDemo.js
+const figlet = require('figlet');
+
+figlet('Node', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data);
+});
+
+
+npm init -y
+npm install figlet
+node fsDemo.js
+node server.js
+node Fruit.js
+node figletDemo.js
+
+---------------------------------------------------------------------------------------------------------------------
+EXP:5
+// server1.js
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Dynamic route with URL parameter 'name'
+app.get('/user/:name', (req, res) => {
+  const userName = req.params.name; // Access URL parameter
+  res.send(`Hello, ${userName}! Welcome to our site.`);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+
+// server2.js
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware function to log requests
+function logRequests(req, res, next) {
+  const method = req.method;
+  const url = req.url;
+  const timestamp = new Date().toISOString();
+
+  console.log(`[${timestamp}] ${method} ${url}`);
+  next(); // Pass control to next middleware or route handler
+}
+
+// Apply middleware globally
+app.use(logRequests);
+
+// Example route
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
+
+
+npm init -y
+
+npm install express
+node server1.js
+node server2.js
+
+node server1.js
+http://localhost:3000/user/Siddhi
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+EXP 6
+SERVER.JS
+const express = require('express');
+const fs = require('fs');
+const fsPromises = require('fs').promises;
+const app = express();
+const PORT = 3000;
+
+// Serve static HTML file
+app.use(express.static(__dirname));
+
+// Callback method
+app.get('/read-callback', (req, res) => {
+  fs.readFile('sample.txt', 'utf8', (err, data) => {
+    if (err) res.send('Error reading file!');
+    else res.send('Callback: ' + data);
+  });
+});
+
+// Promise method
+app.get('/read-promise', (req, res) => {
+  fsPromises.readFile('sample.txt', 'utf8')
+    .then(data => res.send('Promise: ' + data))
+    .catch(() => res.send('Error reading file!'));
+});
+
+// Async/Await method
+app.get('/read-async', async (req, res) => {
+  try {
+    const data = await fsPromises.readFile('sample.txt', 'utf8');
+    res.send('Async/Await: ' + data);
+  } catch {
+    res.send('Error reading file!');
+  }
+});
+
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+---------
+INDEX.HTML
+<!DOCTYPE html>
+<html>
+<head>
+<title>Async Programming</title>
+</head>
+<body>
+<h2>Asynchronous Programming in Node.js</h2>
+<button onclick="callAPI('/read-callback')">Read with Callback</button>
+<button onclick="callAPI('/read-promise')">Read with Promise</button>
+<button onclick="callAPI('/read-async')">Read with Async/Await</button>
+<p id="output"></p>
+
+<script>
+function callAPI(endpoint) {
+  fetch(endpoint)
+    .then(res => res.text())
+    .then(data => document.getElementById('output').innerText = data);
+}
+</script>
+</body>
+</html>
+-------
+SAMPLE.TXT
+This is a sample file for testing asynchronous read methods.
+
+place 3 file in 1 folder
+npm init -y
+npm install express
+node server.js
+ http://localhost:3000
+------------ ---------------------- ----------------------------------------------------
+
+EXP:7
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>AngularJS Directives Example</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+
+  <h1>AngularJS Directives Demo</h1>
+
+  <!-- ng-model: Two-way binding with input -->
+  <label>Enter your name: </label>
+  <input type="text" ng-model="name" placeholder="Your name here" />
+  <p>Hello, <span ng-bind="name"></span>!</p>
+
+  <hr>
+
+  <!-- ng-show/ng-hide: Show or hide based on condition -->
+  <button ng-click="showList = !showList">
+    {{ showList ? 'Hide' : 'Show' }} Fruits List
+  </button>
+
+  <ul ng-show="showList">
+    <!-- ng-repeat: Loop over array items -->
+    <li ng-repeat="fruit in fruits track by $index">
+      {{ fruit }}
+      <!-- ng-click: Remove item on click -->
+      <button ng-click="removeFruit($index)">Remove</button>
+    </li>
+  </ul>
+
+  <hr>
+
+  <!-- Add new fruit -->
+  <input type="text" ng-model="newFruit" placeholder="Add a fruit" />
+  <button ng-click="addFruit()">Add Fruit</button>
+
+</body>
+
+<script>
+  angular.module("myApp", [])
+    .controller("MainCtrl", function($scope) {
+      $scope.name = "";
+
+      $scope.showList = true;
+
+      $scope.fruits = ["Apple", "Banana", "Orange"];
+
+      $scope.addFruit = function() {
+        if ($scope.newFruit) {
+          $scope.fruits.push($scope.newFruit);
+          $scope.newFruit = "";
+        }
+      };
+
+      $scope.removeFruit = function(index) {
+        $scope.fruits.splice(index, 1);
+      };
+    });
+</script>
+
+</html>
+
+
+
+Open Command Prompt / Terminal
+cd path/to/your/folder
+
+Run the file by opening it in a browser
+start chrome exp7.html
+
+---------------------------------------------------------------------------------------------------------------------
+EXP:8
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Router with Guards</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+</head>
+<body ng-controller="NavController">
+
+  <nav>
+    <a href="#!/home">Home</a>
+    <a href="#!/about">About</a>
+    <a href="#!/dashboard">Dashboard</a>
+    <span style="float:right">
+      <button ng-if="!isAuthenticated" ng-click="login()">Login</button>
+      <button ng-if="isAuthenticated" ng-click="logout()">Logout</button>
+    </span>
+  </nav>
+  <hr>
+
+  <div ng-view></div>
+
+  <script>
+    var app = angular.module('myApp', ['ngRoute']);
+
+    app.config(function($routeProvider) {
+      $routeProvider
+        .when('/home', {
+          template: '<h2>Home Page</h2><p>Welcome to the Home page.</p>'
+        })
+        .when('/about', {
+          template: '<h2>About Page</h2><p>This is a public About page.</p>'
+        })
+        .when('/dashboard', {
+          template: '<h2>Dashboard</h2><p>Private content. Login required.</p>',
+          resolve: {
+            auth: function(AuthService, $location) {
+              if (!AuthService.isLoggedIn()) {
+                alert("You must login first!");
+                $location.path('/home');
+              }
+            }
+          }
+        })
+        .otherwise({ redirectTo: '/home' });
+    });
+
+    app.factory('AuthService', function() {
+      var loggedIn = false;
+      return {
+        login: function() { loggedIn = true; },
+        logout: function() { loggedIn = false; },
+        isLoggedIn: function() { return loggedIn; }
+      };
+    });
+
+    app.controller('NavController', function($scope, AuthService) {
+      $scope.isAuthenticated = AuthService.isLoggedIn();
+
+      $scope.login = function() {
+        AuthService.login();
+        $scope.isAuthenticated = true;
+      };
+
+      $scope.logout = function() {
+        AuthService.logout();
+        $scope.isAuthenticated = false;
+      };
+    });
+  </script>
+</body>
+</html>
+
+start chrome exp8.html 
+----------------------------------------------------------------------------------------------------
+EXP:9
+
+npm create vite@latest .
+
+Home.js
+import React from 'react';
+
+function Home() {
+  return <h2>Home Page</h2>;
+}
+
+export default Home;
+----------
+About.jsx
+import React from 'react';
+
+function About() {
+  return <h2>About Page</h2>;
+}
+
+export default About;
+------------
+App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+
+function App() {
+  return (
+    <Router>
+      <nav style={{ marginBottom: '20px' }}>
+        <Link to="/" style={{ marginRight: '10px' }}>Home</Link>	
+        <Link to="/about">About</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
+npm create vite@latest .
+// split the terminal
+npm install react-router-dom
+
+----------------------------------------------------------------------------------------------------
+
+EXP : 10
+npm init -y
+npm install express mysql2 body-parser
+nodemon server.js
+
+// server.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const mysql = require("mysql2");
+
+const app = express();
+const port = 3000;
+
+// Middleware
+app.use(bodyParser.json());
+
+// MySQL Connection
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "crud_api"
+});
+
+db.connect(err => {
+  if (err) throw err;
+  console.log(" MySQL Connected...");
+});
+
+// Create User
+app.post("/users", (req, res) => {
+  const { name, email } = req.body;
+  const sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+  db.query(sql, [name, email], (err, result) => {
+    if (err) throw err;
+    res.send({ message: "User created", id: result.insertId });
+  });
+});
+
+// Read All Users
+app.get("/users", (req, res) => {
+  const sql = "SELECT * FROM users";
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.send(results);
+  });
+});
+
+// Read Single User
+app.get("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "SELECT * FROM users WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.send(result[0] || { message: "User not found" });
+  });
+});
+
+// Update User
+app.put("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+  const sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+  db.query(sql, [name, email, id], (err, result) => {
+    if (err) throw err;
+    res.send({ message: "User updated" });
+  });
+});
+
+// Delete User
+app.delete("/users/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "DELETE FROM users WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.send({ message: "User deleted" });
+  });
+});
+
+// Start Server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+
+
